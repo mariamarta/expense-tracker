@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import './ExpenseForm.css';
 
 const ExpenseForm = (props) => {
@@ -11,7 +10,7 @@ const ExpenseForm = (props) => {
     })
 
     const { enteredTitle, enteredAmount, enteredDate } = userInput;
-    const { onSaveExpenseData } = props;
+    const { onSaveExpenseData, onCancel } = props;
 
     const titleChangeHandler = (e) => {
         setUserInput((prevState) => {
@@ -40,6 +39,17 @@ const ExpenseForm = (props) => {
         })
     }
 
+    const cancelHandler = () => {
+        
+        setUserInput({
+            enteredTitle: '',
+            enteredAmount: '',
+            enteredDate: ''
+        })
+
+        onCancel();
+    }
+
     const submitHandler = (e) => {
         
         e.preventDefault()
@@ -57,6 +67,7 @@ const ExpenseForm = (props) => {
         })
 
         onSaveExpenseData(expenseData)
+        onCancel();
     }
 
     return (
@@ -72,10 +83,11 @@ const ExpenseForm = (props) => {
                 </div>
                 <div className="new-expense__control">
                     <label>Date</label>
-                    <input type="date" value={enteredDate} min="2023-01-01" max="2023-12-31" onChange={dateChangeHandler}/>
+                    <input type="date" value={enteredDate} min="2022-01-01" max="2023-12-31" onChange={dateChangeHandler}/>
                 </div>
             </div>
             <div className="new-expense__actions">
+                <button onClick={cancelHandler}>Cancel</button>
                 <button type="submit">Add Expense</button>
             </div>
         </form>
